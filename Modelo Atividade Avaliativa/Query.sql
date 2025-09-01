@@ -1,47 +1,48 @@
+CREATE DATABASE EMPRESA;
+
+USE EMPRESA;
+
 CREATE TABLE Fornecimento (
     Quantidade INT,
     Fcodigo INT,
     PRcod INT,
-    PRIMARY KEY (Fcodigo, PRcod)
+    PRIMARY KEY (Fcodigo, PRcod),
+    INDEX idx_qtd (Quantidade)
 );
 
 CREATE TABLE Instituicao (
-    Icodigo INT AUTO_INCREMENT PRIMARY KEY,
+    Icodigo INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Inome VARCHAR(100)
 );
 
 CREATE TABLE Fornecedor (
-    Fcodigo INT AUTO_INCREMENT PRIMARY KEY,
+    Fcodigo INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Status VARCHAR(100) DEFAULT 'Ativo',
     Cidade VARCHAR(100),
     Fnome VARCHAR(100)
 );
 
 CREATE TABLE Projeto (
-    PRcod INT AUTO_INCREMENT PRIMARY KEY,
+    PRcod INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     PRnome VARCHAR(100),
     Cidade VARCHAR(100),
-    Icodigo INT
+    Icodigo INT,
+    INDEX idx_icodigo (Icodigo)
 );
 
 CREATE TABLE Peca (
-    Pcodigo INT AUTO_INCREMENT PRIMARY KEY,
+    Pcodigo INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Cidade VARCHAR(100) NOT NULL,
     Pnome VARCHAR(100) NOT NULL,
     Cor VARCHAR(100) NOT NULL,
-    Peso FLOAT NOT NULL
+    Peso FLOAT NOT NULL,
+    INDEX idx_pnome (Pnome)
 );
 
-ALTER TABLE Fornecimento RENAME TO Cidade;
-
-ALTER TABLE Cidade 
-    ADD Ccod INT AUTO_INCREMENT PRIMARY KEY FIRST,
-    ADD uf CHAR(2),
-    ADD Cnome VARCHAR(100);
-
 ALTER TABLE Instituicao 
-    ADD Ccod INT,
-    ADD FOREIGN KEY (Ccod) REFERENCES Cidade (Ccod);
-
-ALTER TABLE Projeto 
-    ADD FOREIGN KEY (Icodigo) REFERENCES Instituicao (Icodigo);
+	RENAME TO Cidade,
+    CHANGE Icodigo Ccod INT AUTO_INCREMENT NOT NULL,
+    CHANGE Inome Cnome VARCHAR(100) NOT NULL,
+    ADD uf CHAR(2) NOT NULL,
+    ADD INDEX idx_cnome (Cnome);
+    
