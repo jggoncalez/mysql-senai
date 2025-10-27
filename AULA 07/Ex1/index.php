@@ -13,5 +13,6 @@
         <input type="email" name="email" required><br>
         <button type="submit">Enviar</button>
     </form>
+    <a href="list.php">Itens</a>
 </body>
 </html>
