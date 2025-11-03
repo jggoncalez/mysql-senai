@@ -11,7 +11,8 @@ while ($row = $result->fetch_assoc()) {
     <td>{$row['id_usuario']}</td>
     <td>{$row['nome']}</td>
     <td>{$row['email']}</td>
-    <td><a href='edit.php?id={$row['id_usuario']}'>Editar</a></td></tr>";
+    <td><a href='edit.php?id={$row['id_usuario']}'>Editar</a>
+    <a href='delete.php?id={$row['id_usuario']}' onclick='return confirm (\"Tem certeza que deseja deletar este usuário?\");'>Deletar</a></td></tr>";
 }
 
 echo "</table>";

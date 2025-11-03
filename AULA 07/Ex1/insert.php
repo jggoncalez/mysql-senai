@@ -19,8 +19,8 @@ if ($conn->query($sql) === TRUE) {
 
 
 // header("Location: index.html);
-exit;
 
 $conn->close();
+exit;
 
 ?>
