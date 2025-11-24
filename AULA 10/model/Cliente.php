@@ -5,89 +5,63 @@ namespace Model;
 class Cliente {
     private $conn;
     private $table = 'CLIENTES';
-
-
     public $clienteID;
     public $clienteNome;
 
     public function __construct($db) {
-        $this -> conn = $db;
+        $this->conn = $db;
     }
 
-    // CREATE - Criar novo cliente
+    // CREATE
     public function create(){
-        $query = "INSERT INTO " . $this->table ; "SET clienteNome = :clienteNome";
-
+        $query = "INSERT INTO CLIENTES (CLIENTENOME) VALUES (:nome)";
         $stmt = $this->conn->prepare($query);
-
-        // Limpar dados    
-        $this -> clienteNome = htmlspecialchars(strip_tags($this->clienteNome));
-
-        // Bind dos parâmetros
-        $stmt->bindParam(':clienteNome', $this->clienteNome);
-        
-        if($stmt -> execute()) {
-            return true;
-        }
-        return false;
+        $stmt->bindParam(':nome', $this->clienteNome);
+        return $stmt->execute();
     }
-    
-    // READ - Listar todos os clientes
+
+    // LIST
     public function list(){
-        $query = "SELECT * FROM " . $this->table . "ORDER BY clienteNome";
+        $query = "SELECT * FROM CLIENTES ORDER BY CLIENTEID";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // GET BY ID
+    public function getById($id){
+        $query = "SELECT * FROM CLIENTES WHERE CLIENTEID = :id LIMIT 1";
 
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
 
         return $stmt;
     }
 
-    public function searchID() {
-        $query = "SELECT * FROM " . $this->table . "WHERE clienteID = :clienteID LIMIT 1";
-
-        $stmt = $this -> conn -> prepare($query);
-        $stmt -> bindParam(':clienteID', $this->clienteID);
-        $stmt -> execute();
-
-        $row = $stmt -> fetch(PDO::FETCH_ASSOC);
-
-        if($row) {
-            $this->clienteNome = $row['clienteNome'];
-            return true;
-        }
-
-        return false;
-    }
-
-    // UPDATE - Atualizar Cliente
-    public function update() {
-        $query = "UPDATE " . $this->table ; "SET clienteNome = :clienteNome WHERE clienteID = :clienteID";
+    // UPDATE
+    public function update(){
+        $query = "UPDATE CLIENTES 
+                  SET CLIENTENOME = :nome 
+                  WHERE CLIENTEID = :id";
 
         $stmt = $this->conn->prepare($query);
 
-        $this->clienteNome = htmlspecialchars(strip_tags($this->clienteNome));
-        $this->clienteID = htmlspecialchars(strip_tags($this->clienteID));
+        $stmt->bindParam(':nome', $this->clienteNome);
+        $stmt->bindParam(':id', $this->clienteID);
 
-        if($stmt->execute()) {
-            return true;
-        }
-        return false;
+        return $stmt->execute();
     }
+
+    // DELETE
     public function delete(){
-        $query = "DELETE FROM " . $this ->table . "WHERE clienteID = :clienteID";
+        $query = "DELETE FROM CLIENTES WHERE CLIENTEID = :id";
 
         $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $this->clienteID);
 
-        $this->clienteID = htmlspecialchars(strip_tags($this->clienteID));
-
-        $stmt->bindParam(':clienteID', $this->clienteID);
-
-        if($stmt -> execute()) {
-            return true;
-        }
-        return false;
+        return $stmt->execute();
     }
 }
 
 ?>
-

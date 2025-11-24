@@ -2,7 +2,12 @@
 
 namespace config;
 
+use config\Config;
+
+require_once 'Config.php';
+
 use PDO;
+
 class Database{
     private static $instance = null;
     private $connection;

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
     <title>Document</title>
 </head>
 <body>
@@ -30,10 +31,8 @@
         </div>
 
         <div class="container">
-            <input type="button" value="Clientes" href="#">
-            <input type="button" value="Veículos" href="#">
-            <input type="button" value="Mecânicos" href="#">
-            <input type="button" value="Ordem de Serviço" href="#">
+            <a href="pageClientes.php">Clientes</a>
+            <a href="pageVeiculos.php">Veículos</a>
         </div>
     </main>
     <?php require_once 'include/footer.php' ?>

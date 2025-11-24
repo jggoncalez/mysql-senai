@@ -46,23 +46,14 @@ class Veiculo {
         return $stmt;
     }
 
-    // READ - buscar por ID
-    public function searchID() {
-        $query = "SELECT * FROM " . $this->table . " WHERE VEICULOID = :veiculoID LIMIT 1";
-        $stmt = $this->conn->prepare($query);
+    public function getByID() {
+            $query = "SELECT * FROM " . $this->table . " WHERE VEICULOID = :id LIMIT 1";
 
-        $stmt->bindParam(':veiculoID', $this->veiculoID);
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
 
-        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if ($row) {
-            $this->veiculoNome  = $row['VEICULONOME'];
-            $this->veiculoTipo  = $row['VEICULOTIPO'];
-            $this->veiculoPlaca = $row['VEICULOPLACA'];
-            $this->clienteID    = $row['CLIENTEID'];
-            return true;
-        }
-        return false;
+        return $stmt;
     }
 
     // UPDATE
